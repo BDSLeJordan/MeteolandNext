@@ -26,7 +26,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={`${interSans.variable} ${interTight.variable} m-2 tablet:mx-8 tablet:my-[1.875rem]`} >
+      <body className={`${interSans.variable} ${interTight.variable} m-2 tablet:mx-8 tablet:my-7.5`} >
         <Header />
         <main className="tablet:mb-10 lg:mb-23">{children}</main>
         <Footer />

@@ -16,7 +16,8 @@ export default function Carousel({ weather }: WeatherProps) {
         {slice?.map((forecast) => (
           <div
             key={forecast.date}
-            className="shrink-0 basis-[13.5%] snap-start bg-background-grey pt-1.5 pr-[1.0625rem] pb-[0.4375rem] pl-[0.9375rem] rounded-[0.75rem] flex flex-col items-center gap-3.5  tablet:px-[1.0625rem] tablet:py-3 tablet:gap-8 tablet:basis-[17.5%]"
+            className="shrink-0 basis-[13.5%] snap-start bg-background-grey pt-1.5 pr-4.25 pb-1.75 pl-3.75
+            rounded-xl flex flex-col items-center gap-3.5  tablet:px-4.25 tablet:py-3 tablet:gap-8 tablet:basis-[17.5%]"
           >
             <p className="text-textColor text-sm font-medium m-0 tablet:text-[1.75rem]">
               {date.toLocalHour(forecast.date as string)}

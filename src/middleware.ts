@@ -12,7 +12,7 @@ const COOKIE_SAMESITE = sessionOptions.cookieOptions?.sameSite; // Utilise le sa
 const COOKIE_DOMAIN_FROM_CONFIG = sessionOptions.cookieOptions?.domain; // Récupère le domaine s'il est défini
 
 const protectedPages = ["/favorites", "/profil","subscribe"];
-const publicAuthPages = ["/signin", "/signup", "forgetpassword", "newpassword", "confirmsignup", "confirmresetpassword","premium"];
+const publicAuthPages = ["/signin","/finalizesignup", "/signup", "/forgetpassword", "/newpassword", "/confirmresetpassword","/premium",];
 
 export async function middleware(request: NextRequest) {
   const responseBase = NextResponse.next(); 

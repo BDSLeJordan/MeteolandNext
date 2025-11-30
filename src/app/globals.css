@@ -14,6 +14,7 @@
   --color-background-grey: var(--Background-Grey);
   --color-button: var(--Button-color);
   --breakpoint-tablet : 800px;
+  --breakpoint-desktop : 1200px;
 }
 
 * {
@@ -27,4 +28,5 @@ html {
 body {
   background: var(--Meteoland-Gradiant) no-repeat;
   padding: 0rem 1.88rem;
+  margin-bottom:0;
 }

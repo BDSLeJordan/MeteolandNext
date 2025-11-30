@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { auth } from '@@/utils/api'; // Assurez-vous que le chemin est correct
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ export default function LoginForm() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,14 +24,10 @@ export default function LoginForm() {
     setError(null);
 
     try {
-      // Appel de votre fonction d'API signInUser
       await auth.signinUser(formData.email, formData.password);
-
-      // Si l'appel réussit, la redirection sera gérée par le middleware
-      console.log('Connexion réussie !');
+      router.refresh(); 
     } catch (err: unknown) {
       const errMes = err instanceof Error? err.message:String(err)
-      // Gérer les erreurs spécifiques renvoyées par l'API
       setError(errMes || 'Identifiants incorrects ou une erreur est survenue.');
     } finally {
       setIsLoading(false);
@@ -37,9 +35,9 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-20 mb-60 max-[420px]:mb-45">
+    <div className="flex flex-col items-center justify-center mt-0 mb-60 tablet:mb-160 desktop:mb-50 max-[420px]:mb-45">
         <h2 className="text-3xl font-bold text-center text-textColor mb-20 tablet:text-5xl">
-          Connectez-vous à votre compte
+          Connexion
         </h2>
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-md">
 
@@ -98,7 +96,7 @@ export default function LoginForm() {
         <p className="text-sm text-center text-gray-600">
           Pas encore de compte ?
           <span className="ml-1 font-medium text-indigo-600">
-            Créez-en un
+            <a href="/signup">Inscrivez-vous</a>
           </span>
         </p>
       </div>

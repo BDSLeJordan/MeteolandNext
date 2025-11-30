@@ -9,7 +9,7 @@ export default function CityInfo({ cityName, weather }: WeatherProps) {
     <div className="flex justify-between">
       {/*<!-- Ville + température + description météo -->*/}
       <div>
-        <p className=" text-textColor text-[2.5rem] font-bold m-0 tablet:text-6xl tablet:leading-[2.8125rem]">{cityName}</p>
+        <p className=" text-textColor text-[2.5rem] font-bold m-0 tablet:text-6xl tablet:leading-11.25">{cityName}</p>
         <p className="text-textColor text-[3rem] font-bold mt-8 mb-8 tablet:text-7xl">
           {Math.round(weather?.forecast?.[0].temp as number)}
           <span className="text-[2.5rem] tablet:text-6xl">°C</span>

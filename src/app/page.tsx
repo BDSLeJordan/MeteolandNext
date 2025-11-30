@@ -13,11 +13,11 @@ export default async function Home() {
         <SearchBar />
       </section>
       <section className="lg:flex lg:justify-between lg:gap-16">
-        <div className="flex flex-col gap-12 lg:flex-[1] lg:min-w-0">
+        <div className="flex flex-col gap-12 lg:flex-1 lg:min-w-0">
           <CityInfo cityName={cityName} weather={meteo}/>
           <Forecast48h weather={meteo}/>
         </div>
-        <div className="lg:flex-[1] lg:min-w-0">
+        <div className="lg:flex-1 lg:min-w-0">
           <Forecast5d weather={meteo}/>
         </div>
       </section>

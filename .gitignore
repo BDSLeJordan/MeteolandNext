@@ -44,3 +44,7 @@ next-env.d.ts
 .dockerignore
 docker-compose.yml
 Dockerfile
+
+# supabase
+/supabase
+complete_backup.sql

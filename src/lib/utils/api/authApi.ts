@@ -1,38 +1,28 @@
 import { ApiResponse } from "@@/types/api";
 async function signupUser(
   email: string,
-  password: string,
-  username: string,
-  birthday_date: string
-): Promise<ApiResponse<boolean>> {
+): Promise<ApiResponse<{ emailConfirmed: boolean; emailSent: boolean }>> {
   try {
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email}),
     });
 
     const data = await res.json().catch(() => {});
-
+    console.log(data);
     if (!res.ok) {
       const erroData = data;
       return {
-        success: false,
-        error: erroData.error || "Erreur inconnue lors de l'inscription.",
+      success: false,
+      error: erroData.message,
       };
     }
-
-    const signupInfos = { username, birthday_date, email };
-    const expiration = Date.now() + 15 * 60 * 1000;
-    localStorage.setItem(
-      "signupInfos",
-      JSON.stringify({ data: signupInfos, expiration })
-    );
 
     return {
       success: true,
       message: data.message,
-      data: data.emailConfirmed,
+      data: {emailConfirmed:data.emailConfirmed,emailSent:data.emailSent},
     };
   } catch (error: unknown) {
     const errMes = error instanceof Error ? error.message : String(error);
@@ -41,7 +31,7 @@ async function signupUser(
   }
 }
 
-async function finalizeSignUpRedirect(
+async function finalizeSignUp(
   infos: object,
   accessToken: string,
   refreshToken: string
@@ -97,8 +87,6 @@ async function signinUser(
         error: erroData.error || "Erreur inconnue lors de la connexion.",
       };
     }
-
-    console.log(data.user, data.session);
 
     return { success: true, message: data.message };
   } catch (error: unknown) {
@@ -230,12 +218,50 @@ async function deleteAccountUser(): Promise<ApiResponse<void>> {
   }
 }
 
+async function checkUsernameAvailability(
+  username: string
+): Promise<ApiResponse<{ isAvailable: boolean }>> {
+  try {
+    const res = await fetch("/api/auth/checkusername", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(username),
+    });
+
+    const data = await res.json().catch(() => {});
+
+    if (!res.ok) {
+      const erroData = data;
+      return {
+        success: false,
+        error:
+          erroData.error ||
+          "Erreur inconnue lors de la vérification de la disponibilité du nom d'utilisateur.",
+      };
+    }
+
+    return {
+      success: true,
+      message: data.message,
+      data: { isAvailable: data.isAvailable },
+    };
+  } catch (error: unknown) {
+    const errMes = error instanceof Error ? error.message : String(error);
+    console.error(
+      "Erreur lors de la vérification de la disponibilité du nom d'utilisateur côté front. ",
+      errMes
+    );
+    return { success: false, error: errMes };
+  }
+}
+
 export {
   signupUser,
-  finalizeSignUpRedirect,
+  finalizeSignUp,
   signinUser,
   sendResetPasswordEmail,
   newPasswordUser,
   signoutUser,
   deleteAccountUser,
+  checkUsernameAvailability
 };

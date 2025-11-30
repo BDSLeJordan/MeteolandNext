@@ -4,21 +4,33 @@ import { handleApiError, verifySessionJWT, CustomError } from "@/lib/utils/ssrUt
 import { getSession } from "@@/config";
 
 async function signup(request: NextRequest): Promise<NextResponse> {
-  const { email, password } = await request.json();
+  const { email} = await request.json();
 
-  if (!email || !password) {
-    throw new CustomError("Email ou mot de passe manquant", 400);
+  if (!email) {
+    throw new CustomError("Email manquant", 400);
   }
 
-  const result = await auth.signupUserService(email, password);
+  const result = await auth.signupUserService(email);
 
-  return NextResponse.json(
-    {
-      message: "Inscription réussie, veuillez confirmer votre email",
-      emailConfirmed: result.emailConfirmed,
-    },
-    { status: 200 }
-  );
+  if (result.emailConfirmed ===true){
+    return NextResponse.json(
+      {
+        message: "L'email est déjà confirmé.",
+        emailConfirmed: result.emailConfirmed,
+      },
+      { status: 400 }
+    );
+
+    
+  }else{
+    return NextResponse.json(
+      {
+        message: "Inscription réussie, veuillez confirmer votre email",
+        emailConfirmed: result.emailConfirmed,
+      },
+      { status: 200 }
+    );
+  }
 }
 
 async function confirmSignUp(request: NextRequest): Promise<NextResponse> {
@@ -31,15 +43,15 @@ async function confirmSignUp(request: NextRequest): Promise<NextResponse> {
     throw new CustomError("Paramètres manquants ou invalides", 400);
   }
 
-  const { accessToken, refreshToken } = await auth.verifyUserTokenSignUpService(
+  const { accessToken, refreshToken,user } = await auth.verifyUserTokenSignUpService(
     token_hash as string
   );
   console.log(
-    `${redirectUrl}#access_token=${accessToken}&refresh_token=${refreshToken}`
+    `${redirectUrl}#access_token=${accessToken}&refresh_token=${refreshToken}&email=${user.email}`
   );
 
   return NextResponse.redirect(
-    `${redirectUrl}#access_token=${accessToken}&refresh_token=${refreshToken}`,
+    `${redirectUrl}#access_token=${accessToken}&refresh_token=${refreshToken}&email=${user.email}`,
     { status: 302 }
   );
 }
@@ -47,10 +59,10 @@ async function confirmSignUp(request: NextRequest): Promise<NextResponse> {
 async function confirmSignUpFinalize(
   request: NextRequest
 ): Promise<NextResponse> {
-  const { username, birthday_date, email, accessToken, refreshToken } =
+  const { password,username, birthday_date, email, accessToken, refreshToken } =
     await request.json();
 
-  if (!username || !birthday_date || !email || !accessToken || !refreshToken) {
+  if (!password || !username || !birthday_date || !email || !accessToken || !refreshToken) {
     throw new CustomError("Données manquantes", 400);
   }
 
@@ -59,7 +71,8 @@ async function confirmSignUpFinalize(
     refreshToken,
     username,
     birthday_date,
-    email
+    email,
+    password
   );
 
   if (!user || !user.iduser) {
@@ -247,6 +260,20 @@ async function newpassword(request: NextRequest): Promise<NextResponse> {
   );
 }
 
+async function checkUsernameAvailability(request: NextRequest): Promise<NextResponse> {
+  const username = await request.json();
+  if (!username) {
+    throw new CustomError("Nom d'utilisateur requis", 400);
+  }
+
+  const isAvailable = await auth.isUsernameAvailableService(username);
+
+  return NextResponse.json(
+    { isAvailable },
+    { status: 200 }
+  );
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ route: string[] }> }
@@ -262,7 +289,8 @@ export async function GET(
         return await confirmSignUp(request);
       case "confirmrecovery":
         return await confirmRecovery(request);
-
+      case "checkusername":
+        return await checkUsernameAvailability(request);
       default:
         throw new CustomError(
           `GET: Sous-route de l'auth non trouvée ou méthode non autorisée: /api/auth/${routePath}`,

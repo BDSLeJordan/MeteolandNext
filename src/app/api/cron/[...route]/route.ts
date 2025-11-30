@@ -90,12 +90,12 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ month: string[] }> }
+  { params }: { params: Promise<{ route: string[] }> }
 ) {
-  const { month } = await params;
+  const { route } = await params;
 
   try {
-    const routePath = month.join("/");
+    const routePath = route.join("/");
     throw new CustomError(
       `DELETE: Méthode non autorisée pour la tâche cron: /api/cron/${routePath}`,
       405

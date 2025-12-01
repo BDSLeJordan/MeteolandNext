@@ -33,7 +33,7 @@ export default function WeatherPage() {
         <SearchBar />
       </section>
       <section className="lg:flex lg:justify-between lg:gap-16">
-        <div className="flex flex-col gap-12 lg:flex-[1] lg:min-w-0">
+        <div className="flex flex-col gap-12 lg:flex-1 lg:min-w-0">
           {weatherData && cityN ? (
             <>
               <CityInfo cityName={cityN} weather={weatherData} />
@@ -45,7 +45,7 @@ export default function WeatherPage() {
             </>
           )}
         </div>
-        <div className="lg:flex-[1] lg:min-w-0">
+        <div className="lg:flex-1 lg:min-w-0">
           {weatherData ? (
             <>
               <Forecast5d weather={weatherData} />

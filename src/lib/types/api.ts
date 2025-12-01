@@ -9,7 +9,7 @@ export interface UserData {
   username?: string;
   lastname?: string;
   firstname?: string;
-  birthday_date: Date;
+  birthday_date: string;
   email?: string;
   number_phone: string;
   location: string;

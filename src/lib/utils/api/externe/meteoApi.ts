@@ -1,5 +1,4 @@
 import { WeatherObject } from "@@/types/api";
-// Fonction exportée par défaut qui récupère les prévisions météo pour une ville donnée
 export default async function getForecast(city:string) {
   try {
     // Requête vers l’API OpenWeather pour récupérer les prévisions 5 jours toutes les 3h
@@ -27,7 +26,6 @@ export default async function getForecast(city:string) {
     };
 
     // On retourne un objet contenant les prévisions et les infos sur la ville
-    // console.log({forecast,city})
     return { forecast, cityData };
   } catch (err) {
     console.log("Erreur dans meteoApi.js :", err);

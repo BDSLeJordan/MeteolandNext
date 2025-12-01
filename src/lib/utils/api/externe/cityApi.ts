@@ -1,6 +1,5 @@
 import { CityObject } from "@@/types/api";
 
-// Fonction principale exportée par défaut, qui prend une ville (ou un code postal) en argument
 export default async function getCity(city:string) {
   // Vérifie si l'entrée est un code postal (5 chiffres)
   const isPostcode = /^\d{5}$/.test(city);
@@ -44,7 +43,6 @@ export default async function getCity(city:string) {
         city: item.nom,
         postcode: item.codesPostaux[0]
       }));
-      // console.log("fetchcityexterne: ",cityData)
     // On retourne le tableau d’objets contenant les villes filtrées
     return cityData;
   } catch (err) {

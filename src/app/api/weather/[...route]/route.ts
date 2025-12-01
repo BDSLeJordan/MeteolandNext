@@ -22,7 +22,7 @@ export async function GET(
   try {
     const routePath = route.join("/");
     throw new CustomError(
-      `POST: Méthode non autorisée sur /api/weather/${routePath}`,
+      `GET: Méthode non autorisée sur /api/weather/${routePath}`,
       405
     );
   } catch (error: unknown) {
@@ -38,7 +38,7 @@ export async function PUT(
   try {
     const routePath = route.join("/");
     throw new CustomError(
-      `POST: Méthode non autorisée sur /api/weather/${routePath}`,
+      `PUT: Méthode non autorisée sur /api/weather/${routePath}`,
       405
     );
   } catch (error: unknown) {
@@ -58,7 +58,7 @@ export async function POST(
       return await getWeather(request);
     } else {
       throw new CustomError(
-        `GET: Sous-route de la météo non trouvée ou méthode non autorisée: /api/weather/${routePath}`,
+        `POST: Sous-route de la météo non trouvée ou méthode non autorisée: /api/weather/${routePath}`,
         404
       );
     }

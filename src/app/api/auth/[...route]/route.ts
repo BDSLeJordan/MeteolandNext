@@ -66,9 +66,6 @@ async function confirmSignUpFinalize(
     throw new CustomError("Erreur lors de la finalisation du compte.", 500);
   }
 
-  // 3. Initialisation de la session avec iron-session
-  // Créons une réponse temporaire que `getSession` pourra manipuler.
-  // La réponse finale sera construite plus tard.
   const response = NextResponse.json({});
 
   const session = await getSession(request, response);
@@ -320,7 +317,6 @@ export async function DELETE(
     if (routePath === "deleteuser") {
       return await deleteUser(request);
     } else {
-      // Gérer toutes les autres sous-routes PUT non reconnues ou non autorisées
       throw new CustomError(
         `PUT: Sous-route de l'auth non trouvée ou méthode non autorisée: /api/auth/${routePath}`,
         404

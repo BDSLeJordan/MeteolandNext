@@ -102,10 +102,10 @@ export async function PUT(
     const routePath = route.join("/");
 
     if (routePath === "addinfos") {
-      // PUT /api/profils/addInfos
+
       return await setProfilInformation(request);
     } else {
-      // Gérer toutes les autres sous-routes PUT non reconnues ou non autorisées
+
       throw new CustomError(
         `PUT: Sous-route du profil non trouvée ou méthode non autorisée: /api/profils/${routePath}`,
         404
@@ -123,7 +123,7 @@ export async function POST(
   const { route } = await params;
   try {
     const routePath = route.join("/");
-    // Aucune des deux routes ('me', 'addInfos') ne supporte POST
+
     throw new CustomError(
       `POST: Méthode non autorisée sur /api/profils/${routePath}`,
       405
@@ -140,7 +140,7 @@ export async function DELETE(
   const { route } = await params;
   try {
     const routePath = route.join("/");
-    // Aucune des deux routes ('me', 'addInfos') ne supporte DELETE
+
     throw new CustomError(
       `DELETE: Méthode non autorisée sur /api/profils/${routePath}`,
       405

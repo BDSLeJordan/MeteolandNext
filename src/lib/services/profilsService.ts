@@ -53,7 +53,7 @@ async function setUsersInformationService(
     updateObj.number_phone = userInfos.phoneNumber;
   if ("location" in userInfos) updateObj.location = userInfos.location;
 
-  // Si aucun champ à updater, on renvoie une erreur
+
   if (Object.keys(updateObj).length === 0) {
     throw new Error("Aucune donnée à mettre à jour");
   } else {

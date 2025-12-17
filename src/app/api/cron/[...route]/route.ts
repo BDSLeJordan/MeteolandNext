@@ -1,13 +1,9 @@
-// src/app/api/cron/[...path]/route.ts
 
 import { NextRequest, NextResponse } from "next/server";
 import { handleApiError, CustomError } from "@/lib/utils/ssrUtils";
 
-// Importe tes tâches cron spécifiques depuis le fichier index
 import { cleanupPendingUsersJob, purgeUsersJob } from "@@/services/crons";
 
-// Récupère la clé API de l'environnement
-// IMPORTANT : Assure-toi que cette variable d'environnement est définie sur Vercel et dans ton .env.local
 const CRON_API_KEY = process.env.CRON_API_KEY;
 
 export async function POST(
@@ -16,30 +12,21 @@ export async function POST(
 ) {
   const { route } = await params;
   try {
-    // --- DÉBUT DE LA VÉRIFICATION DE LA CLÉ API ---
-    // 1. Récupère l'en-tête d'autorisation
+
     const authorizationHeader = request.headers.get("Authorization");
 
-    // 2. Vérifie sa présence et son format (doit commencer par 'Bearer ')
     if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
-      // Si l'en-tête est manquant ou mal formaté, refuse l'accès
       throw new CustomError(
         "En-tête d'autorisation manquant ou mal formaté.",
         401
-      ); // Unauthorized
+      );
     }
 
-    // 3. Extrait la clé API fournie par le client
     const providedKey = authorizationHeader.split(" ")[1];
-
-    // 4. Compare la clé fournie avec la clé secrète configurée dans tes variables d'environnement
-    // Si la clé n'est pas définie (erreur de config) ou ne correspond pas, refuse l'accès
     if (!CRON_API_KEY || providedKey !== CRON_API_KEY) {
-      throw new CustomError("Clé API de cron invalide.", 403); // Forbidden
+      throw new CustomError("Clé API de cron invalide.", 403);
     }
-    // --- FIN DE LA VÉRIFICATION DE LA CLÉ API ---
 
-    // Le reste de la logique de ta route API ne sera exécuté que si la clé est valide
     const routePath = route.join("/");
 
     switch (routePath) {
@@ -62,13 +49,12 @@ export async function POST(
         );
     }
   } catch (error: unknown) {
-    // Gestion centralisée des erreurs via handleApiError
+
     return handleApiError(error);
   }
 }
 
-// Les méthodes GET, PUT, DELETE renvoient toujours 405 Method Not Allowed
-// pour les routes cron, car elles ne sont pas destinées à ces opérations.
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ route: string[] }> }

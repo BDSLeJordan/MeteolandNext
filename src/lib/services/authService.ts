@@ -66,7 +66,7 @@ async function insertUserDataWithSessionService(
     );
   }
 
-  // 🔍 Vérification si l'utilisateur est déjà inscrit
+
   const { data: existingUser } = await supabaseToken
     .from("Users")
     .select("id")
@@ -77,7 +77,7 @@ async function insertUserDataWithSessionService(
     throw new CustomError("Utilisateur déjà confirmé", 409);
   }
 
-  // 👉 Insertion dans la table Users
+
   const { error: insertError } = await supabaseToken.from("Users").insert([
     {
       id: user.id,

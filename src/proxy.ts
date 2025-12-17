@@ -14,7 +14,7 @@ const COOKIE_DOMAIN_FROM_CONFIG = sessionOptions.cookieOptions?.domain; // Récu
 const protectedPages = ["/favorites", "/profil","subscribe"];
 const publicAuthPages = ["/signin","/finalizesignup", "/signup", "/forgetpassword", "/newpassword", "/confirmresetpassword","/premium",];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const responseBase = NextResponse.next(); 
   const { pathname } = request.nextUrl;
   let isAuthenticated = false;

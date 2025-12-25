@@ -21,7 +21,7 @@ export async function GET(
   try {
     const routePath = route.join("/");
     throw new CustomError(
-      `POST: Méthode non autorisée sur /api/city/${routePath}`,
+      `GET: Méthode non autorisée sur /api/city/${routePath}`,
       405
     );
   } catch (error: unknown) {
@@ -37,7 +37,7 @@ export async function PUT(
   try {
     const routePath = route.join("/");
     throw new CustomError(
-      `POST: Méthode non autorisée sur /api/city/${routePath}`,
+      `PUT: Méthode non autorisée sur /api/city/${routePath}`,
       405
     );
   } catch (error: unknown) {
@@ -57,7 +57,7 @@ export async function POST(
       return await fetchCity(request);
     } else {
       throw new CustomError(
-        `GET: Sous-route de la ville non trouvée ou méthode non autorisée: /api/city/${routePath}`,
+        `POST: Sous-route de la ville non trouvée ou méthode non autorisée: /api/city/${routePath}`,
         404
       );
     }

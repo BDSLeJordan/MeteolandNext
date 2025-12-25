@@ -12,7 +12,7 @@ export default async function Header() {
           Météoland
         </h1>
       </Link>
-      <div className="flex items-center justify-between gap-[1.75rem]">
+      <div className="flex items-center justify-between gap-7">
         {/*<!-- SECTION 1 : Barre de recherche visible à partir de width:1024px -->*/}
         <div className="hidden lg:flex bg-background-grey rounded-3xl p-1">
           <HeaderSearchInput />

@@ -4,7 +4,6 @@ import { CityApiData, WeatherApiData } from "@@/types/weather";
 async function getCityClient(
   city: string
 ): Promise<ApiResponse<CityApiData>> {
-    // console.log("getCityClient: ",city)
   try {
     const res = await fetch("/api/city/fetchcity", {
       method: "POST",

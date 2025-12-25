@@ -106,7 +106,7 @@ async function signin(request: NextRequest): Promise<NextResponse> {
     throw new CustomError("Email et mot de passe requis", 400);
   }
 
-  const { user, profile, accessToken } = await auth.loginUserService(
+  const { user, profile, accessToken } = await auth.signInUserService(
     email,
     password
   );

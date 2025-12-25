@@ -1,11 +1,11 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState, } from "react";
+import { useState, type FormEvent } from "react";
 
 export default function HeaderSearchInput() {
   const [name, setName] = useState("");
   const router = useRouter();
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) =>{
+  const handleSubmit = (e:FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
     if(name.trim()==="")return;
     router.push(`/weather/${encodeURIComponent(name.trim().toLowerCase())}`);
@@ -13,7 +13,7 @@ export default function HeaderSearchInput() {
   return (
     <>
       <form onSubmit={handleSubmit}className="w-[15rem]" method="post">
-        <div className="flex items-center w-[15.1875rem] gap-2.5">
+        <div className="flex items-center w-60.75 gap-2.5">
           <button type="submit">
             <svg
               className="w-6 aspect-square"
@@ -39,7 +39,7 @@ export default function HeaderSearchInput() {
           </button>
           <input
             id="header_search"
-            className="text-textColor text-xl bg-none border-0 w-[12.5rem] placeholder:text-textColor"
+            className="text-textColor text-xl bg-none border-0 w-50 placeholder:text-textColor"
             type="text"
             placeholder="Rechercher une ville"
             value={name}

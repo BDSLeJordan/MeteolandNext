@@ -112,7 +112,7 @@ async function insertUserDataWithSessionService(
   };
 }
 
-async function loginUserService(email: string, password: string) {
+async function signInUserService(email: string, password: string) {
   const { data: authData, error: authError } =
     await supabaseClient.supabase.auth.signInWithPassword({ email, password });
 
@@ -296,7 +296,7 @@ async function isUsernameAvailableService(username: string) {
 export {
   signupUserService,
   insertUserDataWithSessionService,
-  loginUserService,
+  signInUserService,
   softDeleteUserService,
   sendEmailResetPasswordService,
   confirmEmailOtpService,

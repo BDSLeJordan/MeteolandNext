@@ -1,8 +1,7 @@
 import { ApiResponse,SessionData } from "@@/types/api";
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export default async function checkSession(): Promise<ApiResponse<SessionData>> {
   try {
-    const res = await fetch(`${BASE_URL}/api/auth/me`, {
+    const res = await fetch("/api/auth/me", {
       method: "GET",
       credentials: "include",
     });

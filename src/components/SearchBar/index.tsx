@@ -11,9 +11,9 @@ export default function SearchBar() {
     }
   return (
     <>
-      <div className="lg:hidden bg-background-grey rounded-xl flex w-full h-[3.125rem] pl-3 items-center">
+      <div className="lg:hidden bg-background-grey rounded-xl flex w-full h-12.5 pl-3 items-center">
         <form  onSubmit={handleSubmit}className="w-full" method="post">
-          <div className="flex-[1] flex items-center gap-2.5">
+          <div className="flex-1 flex items-center gap-2.5">
             <button type="submit">
               <svg
                 className="w-6 h-6"
